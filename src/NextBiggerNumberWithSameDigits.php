@@ -1,4 +1,8 @@
-<?php declare(strict_types = 1);
+<?php
+
+/** @noinspection MissingOrEmptyGroupStatementInspection */
+
+declare(strict_types = 1);
 
 namespace CodeWars;
 
@@ -8,39 +12,36 @@ final class NextBiggerNumberWithSameDigits
   {
     $numberParts = str_split((string) $number);
 
+    $numberToSwapIndex = null;
     for($i = count($numberParts) - 1; $i > 0; $i--)
     {
-      if($numberParts[$i] <= $numberParts[$i - 1])
-      {
-        continue;
-      }
+      if($numberParts[$i] <= $numberParts[$i - 1]) continue;
 
-      $numberToSwap = $numberParts[$i - 1];
-      $numbersBeforeSwap = array_slice($numberParts, $i);
+      $numberToSwapIndex = $i - 1;
+      break;
+    }
+    if($numberToSwapIndex === null) return -1;
 
-      $found = false;
-      for($j = count($numbersBeforeSwap) - 1; $j >= 0; $j--)
-      {
-        if($numbersBeforeSwap[$j] > $numberToSwap)
-        {
-          $temp = $numberParts[$i - 1];
-          $numberParts[$i - 1] = $numbersBeforeSwap[$j];
-          $numbersBeforeSwap[$j] = $temp;
-          $found = true;
-          break;
-        }
-      }
+    $numberToSwap = $numberParts[$numberToSwapIndex];
+    $numbersBeforeSwap = array_slice($numberParts, $numberToSwapIndex + 1);
 
-      if(!$found)
+    $found = false;
+    for($j = count($numbersBeforeSwap) - 1; $j >= 0; $j--)
+    {
+      if($numbersBeforeSwap[$j] > $numberToSwap)
       {
+        $temp = $numberParts[$numberToSwapIndex];
+        $numberParts[$numberToSwapIndex] = $numbersBeforeSwap[$j];
+        $numbersBeforeSwap[$j] = $temp;
+        $found = true;
         break;
       }
-
-      sort($numbersBeforeSwap);
-      array_splice($numberParts, $i, count($numbersBeforeSwap), $numbersBeforeSwap);
-      return (int) implode('', $numberParts);
     }
 
-    return -1;
+    if(!$found) return -1;
+
+    sort($numbersBeforeSwap);
+    array_splice($numberParts, $numberToSwapIndex + 1, count($numbersBeforeSwap), $numbersBeforeSwap);
+    return (int) implode('', $numberParts);
   }
 }
