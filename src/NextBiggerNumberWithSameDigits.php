@@ -6,6 +6,7 @@ declare(strict_types = 1);
 
 namespace CodeWars;
 
+// https://www.codewars.com/kata/55983863da40caa2c900004e
 final class NextBiggerNumberWithSameDigits
 {
   public static function nextBigger(int $number): int
