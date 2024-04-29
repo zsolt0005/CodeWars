@@ -1,0 +1,21 @@
+{
+  "autoload": {
+    "psr-4": {
+      "CodeWars\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CodeWars\\Tests\\": "tests"
+    }
+  },
+  "require": {
+    "php": "^8.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "9.6.17"
+  },
+  "scripts": {
+    "phpunit": "vendor/bin/phpunit tests"
+  }
+}
